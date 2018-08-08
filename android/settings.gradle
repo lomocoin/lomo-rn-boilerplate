@@ -1,0 +1,3 @@
+rootProject.name = 'LomoRN'
+
+include ':app'
