@@ -1,0 +1,35 @@
+{
+  "port": 3000,
+  "auth": {
+    "username": "test",
+    "password": "test",
+    "whiteList": [
+      "/lists"
+    ]
+  },
+  "compilerOptions": {
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "target": "es6",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "declaration": true,
+    "baseUrl": ".",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "strictNullChecks": true,
+    "paths": {
+      "*": [
+        "node_modules/*"
+      ]
+    },
+    "typeRoots" : ["mock"]
+  },
+  "include": [
+    "mock/**/*"
+  ],
+  "exclude": [
+    "src"
+  ]
+}

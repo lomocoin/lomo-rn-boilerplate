@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "allowSyntheticDefaultImports": true,
+    "strictPropertyInitialization": true,
+    "strictNullChecks": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "jsx": "react",
+    "strict": true,
+    "noEmit": true,
+    "noImplicitAny": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "moduleResolution": "node",
+    "lib": ["dom", "es2016"]
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "language": "en",
+
+  "app_confirm_exit": "Click again to exit the app",
+  "app_score_desc": "Like our app? Come and write a comment!",
+  "app_score_confirm": "Rate now",
+  "app_score_next": "Next time",
+  "app_score_cancel": "Don't ask again",
+  "app_contact_us": "Contact us",
+  "app_update_already_latest": "This is the latest version",
+
+  "error_unknown": "Unknown error",
+  "error_network": "Network error",
+
+  "auth_token_invalid": "Session expired",
+  "auth_token_blocked": "Session invalid",
+
+  "menu_tabbar_user": "Profile",
+  "menu_tabbar_todo": "Todos",
+
+  "splash_btn_skip_ad": "Skip",
+  "splash_btn_skip_slow": "Wait a bit more",
+  "splash_network_alert": "Network error, please try later after checking the network",
+  "splash_network_btn_retry": "Try again",
+
+  "register_title": "Sign up",
+  "register_btn_signup": "Sign up",
+  "register_btn_signin": "Sign in",
+  "register_label_username": "Nickname",
+  "register_label_password": "Password",
+  "register_label_repeat_password": "Repeat password",
+  "register_rule_username": "Maximum 20 characters including letters, numbers and underscore.",
+  "register_rule_password": "8 to 16 characters including letters, numbers and one symbols (!@#$%^&).",
+  "register_invalid_name": "Invalid usename",
+  "register_invalid_password": "Invalid password",
+  "register_repeat_password_error": "The confirm password do not match",
+  "register_label_signin": "Already have an account?",
+
+  "login_title": "Sign in",
+  "login_loading": "Loading…",
+  "login_label_username": "Username",
+  "login_label_password": "Password",
+  "login_placeholder_username": "Enter your username",
+  "login_placeholder_password": "Enter your password",
+  "login_need_username": "Please enter your username",
+  "login_need_password": "Please enter your password",
+  "login_btn_signin": "Sign in",
+  "login_label_forgot_password": "Forgot your password?",
+  "login_btn_forgot_password": "Click here",
+  "login_label_signup": "Don't have an account yet?",
+  "login_btn_signup": "Sign up",
+
+  "user_tab_menu_1": "Menu 1",
+  "user_tab_menu_2": "Menu 2",
+  "user_tab_share": "Share to a friend",
+  "user_tab_settings": "Settings",
+
+  "settings_title": "Settings",
+  "settings_tab_security": "Security center",
+  "settings_tab_privacy": "Privacy policy",
+  "settings_tab_copyright": "Copyright",
+  "settings_tab_contact_us": "Contact us",
+  "settings_tab_appversion": "Version",
+  "settings_btn_signout": "Sign out",
+
+  "todo_list_title": "My todos",
+  "todo_list_add_placeholder": "Write something interesting...",
+  "todo_action_delete": "Delete",
+  "todo_notify_completed": "Todo has been completed",
+  "todo_notify_deleted": "Todo has been deleted"
+}
