@@ -5,14 +5,14 @@ import { V } from '../themes';
 const styles = {
   backgroundColor: V.primaryColor,
   width: 300,
-  height: Platform.OS === 'ios' ? 50 : 100,
+  height: Platform.OS === 'ios' ? 50 : 130,
   color: '#ffffff',
   fontSize: 15,
   lineHeight: 2,
   lines: 4,
   borderRadius: 15,
   fontWeight: 'bold',
-  yOffset: 40,
+  yOffset: 60,
 };
 
 export default function showToast(

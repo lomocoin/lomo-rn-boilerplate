@@ -1,8 +1,8 @@
 export default {
   // App color
-  appContainerColor: '#6A1B9A',
-  appStatusBarColor: '#6A1B9A',
-  
+  appContainerColor: '#ffffff',
+  appStatusBarColor: '#ffffff',
+
   // Palette
   headerColor: '#000000',
   defaultColor: '#222222',

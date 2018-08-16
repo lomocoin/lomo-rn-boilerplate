@@ -39,7 +39,7 @@ export default class Badge extends PureComponent<Props> {
     const badgeStyles = {
       width: size,
       height: size,
-      borderRadius: size / 2,
+      borderRadius: size! / 2,
     };
 
     const badgeValue = value > 99 ? '...' : value;
