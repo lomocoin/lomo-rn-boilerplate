@@ -29,7 +29,7 @@
     "mobx-persist": "^0.4.1",
     "mobx-react": "^5.2.5",
     "moment": "^2.22.2",
-    "parrot": "git+https://github.com/lomocoin/parrot#3b1750ebd0836c4e53679c256fca516452b3be44",
+    "parrot": "git+https://github.com/lomocoin/parrot#f55c4a0365f6253cfcb97a8be4811871b43a8a51",
     "react": "16.4.2",
     "react-native": "0.56.0",
     "react-native-code-push": "^5.4.1",
