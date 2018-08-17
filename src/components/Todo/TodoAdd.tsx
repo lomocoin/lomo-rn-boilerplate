@@ -13,8 +13,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     margin: 5,
   },
-  statusText: {
-    color: V.successColor,
+  textInput: {
+    flex: 1,
+    height: 50,
+    paddingHorizontal: V.paddingBase,
   },
 });
 
@@ -42,10 +44,10 @@ export class TodoAdd extends PureComponent<Props> {
 
   render() {
     return (
-      <View style={[styles.container,S.padding]}>
+      <View style={[styles.container, S.padding]}>
         <Icon name="plus" size={28} color={V.whiteColor} />
         <TextInput
-            style={[S.textDefault, S.colorWhite, S.flex, S.paddingLeft10]}
+            style={[styles.textInput, S.textDefault, S.colorWhite]}
             returnKeyType="done"
             underlineColorAndroid="transparent"
             value={this.state.inputText}

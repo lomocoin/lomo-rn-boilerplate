@@ -12,6 +12,7 @@ configure({
 });
 
 enableLogging({
+  predicate: () => __DEV__ && Boolean(window.navigator.userAgent),
   action: true,
   reaction: false,
   transaction: false,
