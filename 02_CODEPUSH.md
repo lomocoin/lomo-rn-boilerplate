@@ -35,8 +35,8 @@ Secondly, we need to login with the proper account by `appcenter login`.
 
 To release a `Staging` patch, we use `appcenter codepush release-react -a <owner>/<app> -d Staging`. `<owner>` and `<app>` are placeholders to be replaced by actual value.
 
-Example for iOS: `appcenter codepush release-react -a lomocoin/Lomo-RN-Boilerplate-iOS -d Staging`
-Example for Android: `appcenter codepush release-react -a lomocoin/Lomo-RN-Boilerplate-Android -d Staging`
+Example for iOS: `appcenter codepush release-react -a LoMoCoinTeam/Lomo-RN-Boilerplate-iOS -d Staging`
+Example for Android: `appcenter codepush release-react -a LoMoCoinTeam/Lomo-RN-Boilerplate-Android -d Staging`
 
 Then, we can `Promote` a tested `Staging` update to `Production` in the dashboard. By the way, we can release the `Production` patch directly with CLI tool but that's not recommended.
 
@@ -46,8 +46,14 @@ While we can do some config in the dashboard and choose to utilize more complex 
 
 ### Android Deployment Key
 
-* To fetch deployment key, exec `appcenter codepush deployment list -a lomocoin/Lomo-RN-Boilerplate-Android`
+* To fetch deployment key, exec `appcenter codepush deployment list -a LoMoCoinTeam/Lomo-RN-Boilerplate-Android`
+
+* Staging    │ HkEsIv6DKddaxQcRBem3qAVxtTwNSJ43ueVLQ │
+* Production │ z2XkRWNZSlIPqvkiX2G1tZxLNYDABk42Ol4Um │
 
 ### iOS Deployment Key
 
-* To fetch deployment key, exec `appcenter codepush deployment list -a lomocoin/Lomo-RN-Boilerplate-iOS`
+* To fetch deployment key, exec `appcenter codepush deployment list -a LoMoCoinTeam/Lomo-RN-Boilerplate-iOS`
+
+* Staging    │ LiQyho3bQ-TDd7tKy4pKri_N5UkqSJXlnxE87 │
+* Production │ 3HrlRpTw-pOU5POl3h8Ufqhz9wyur1Ql3xEUX │
