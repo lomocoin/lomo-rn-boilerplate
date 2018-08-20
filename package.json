@@ -17,7 +17,8 @@
     "reset": "watchman watch-del-all && react-native start --reset-cache",
     "translations": "node ./scripts/make-translations.js",
     "android-gen-assets": "yo rn-toolbox:assets --splash ./resources/splash.png --android",
-    "record-screen-ios": "xcrun simctl io booted recordVideo appvideo.mov"
+    "record-screen-ios": "xcrun simctl io booted recordVideo appvideo.mov",
+    "rename": "node ./scripts/rename.js"
   },
   "dependencies": {
     "appcenter": "^1.7.1",
