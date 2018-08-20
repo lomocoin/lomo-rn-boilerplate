@@ -4976,9 +4976,9 @@ pac-resolver@^3.0.0:
     netmask "^1.0.6"
     thunkify "^2.1.2"
 
-"parrot@git+https://github.com/lomocoin/parrot#3b1750ebd0836c4e53679c256fca516452b3be44":
+"parrot@git+https://github.com/lomocoin/parrot#f55c4a0365f6253cfcb97a8be4811871b43a8a51":
   version "1.0.0"
-  resolved "git+https://github.com/lomocoin/parrot#3b1750ebd0836c4e53679c256fca516452b3be44"
+  resolved "git+https://github.com/lomocoin/parrot#f55c4a0365f6253cfcb97a8be4811871b43a8a51"
   dependencies:
     body-parser "^1.18.2"
     bunyan "^1.8.12"
@@ -5439,9 +5439,9 @@ react-native-tab-view@^1.0.0:
   dependencies:
     prop-types "^15.6.1"
 
-react-native-toast-native@^1.2.1:
+"react-native-toast-native@git+https://github.com/lomocoin/react-native-toast-native#4a49c3e656d92e17d80a16824b56634c6bc4b22a":
   version "1.2.1"
-  resolved "https://registry.yarnpkg.com/react-native-toast-native/-/react-native-toast-native-1.2.1.tgz#ced3bb7cf26e63e670c881edc51bfa1087423c67"
+  resolved "git+https://github.com/lomocoin/react-native-toast-native#4a49c3e656d92e17d80a16824b56634c6bc4b22a"
 
 react-native-typescript-transformer@^1.2.10:
   version "1.2.10"
