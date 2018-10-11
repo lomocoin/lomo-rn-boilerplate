@@ -4,6 +4,7 @@ import { iconsMap, iconsLoaded } from '../themes/base/icons';
 
 import Splash from './Splash';
 import Login from './Auth/Login';
+import Register from './Auth/Register';
 import TodoList from './Todo/TodoList';
 import Profile from './User/Profile';
 import Settings from './User/Settings';
@@ -12,6 +13,7 @@ import { V } from '../themes';
 
 export const SPLASH = 'lomo.Splash';
 export const LOGIN = 'lomo.Login';
+export const REGISTER = 'lomo.Register';
 export const TODOLIST = 'lomo.TodoList';
 export const PROFILE = 'lomo.Profile';
 export const SETTINGS = 'lomo.Settings';
@@ -20,6 +22,7 @@ export const Screens = new Map();
 
 Screens.set(SPLASH, Splash);
 Screens.set(LOGIN, Login);
+Screens.set(REGISTER, Register);
 Screens.set(PROFILE, Profile);
 Screens.set(TODOLIST, TodoList);
 
@@ -38,6 +41,12 @@ export const startApp = () => {
 };
 
 export const startHomeTab = () => {
+  iconsLoaded().then(() => {
+    setRootToHomeTab();
+  })
+}
+
+function setRootToHomeTab() {
   Navigation.setRoot({
     root: {
       bottomTabs: {
@@ -81,3 +90,4 @@ export const startHomeTab = () => {
     },
   });
 }
+

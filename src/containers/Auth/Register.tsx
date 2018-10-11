@@ -12,6 +12,8 @@ import { navigate } from '../../navigation';
 import { AuthStoreInjectedProps, CommonStoreInjectedProps, UserStoreInjectedProps } from '../../stores';
 import { IMAGES, S } from '../../themes';
 import showToast from '../../utils/Toast';
+import { Navigation } from 'react-native-navigation';
+import { startHomeTab } from '../index';
 
 interface Props
   extends AuthStoreInjectedProps,
@@ -55,7 +57,7 @@ export default class Register extends Component<Props, State> {
       .register(params)
       .then(() => user.getUser())
       .then(() => {
-        navigate('App');
+        startHomeTab();
         common.hideLoading();
       })
       .catch(error => {
@@ -117,7 +119,7 @@ export default class Register extends Component<Props, State> {
   };
 
   toggleLogin = () => {
-    navigate('Login');
+    Navigation.pop(this.props.componentId);
   };
 
   render() {

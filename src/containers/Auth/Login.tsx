@@ -23,9 +23,8 @@ import {
 import { IMAGES, S } from '../../themes';
 import showToast from '../../utils/Toast';
 import { Navigation } from 'react-native-navigation';
-import { PROFILE, TODOLIST, startHomeTab } from '..';
-const Icon = require('react-native-vector-icons/Ionicons');
-import { iconsMap, iconsLoaded } from '../../themes/base/icons';
+import { REGISTER, startHomeTab } from '..';
+import { iconsLoaded } from '../../themes/base/icons';
 
 interface Props
   extends UserStoreInjectedProps,
@@ -37,12 +36,6 @@ interface State {
   username: string;
   password: string;
 }
-
-// var settingsIcon;
-// var settingsOutlineIcon;
-// var peopleIcon;
-// var iosNavigateOutline;
-// var iosNavigate;
 
 @inject('user', 'auth', 'common')
 @observer
@@ -116,7 +109,21 @@ export default class Login extends Component<Props, State> {
   };
 
   toggleRegister = () => {
-    navigate('Register');
+    Navigation.push(this.props.componentId,{
+      component: {
+        name: REGISTER,
+      //   passProps: {
+      //     text: 'Pushed screen'
+      //   },
+      //   options: {
+      //     topBar: {
+      //       title: {
+      //         text: 'Pushed screen title'
+      //       }
+      //     }
+      //   }
+      }
+    });
   };
 
   render() {
