@@ -2,38 +2,50 @@
 
 buildscript {
     repositories {
-        jcenter()
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
-        }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google'}
+        mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
 }
 
-allprojects {
-    repositories {
-        mavenLocal()
-        maven { url 'https://maven.google.com' }
-        jcenter()
-        maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url "$rootDir/../node_modules/react-native/android"
-        }
-        maven {
-            url 'https://maven.google.com/'
-            name 'Google'
+subprojects { subproject ->
+    afterEvaluate {
+        if ((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
+            android {
+                variantFilter { variant ->
+                    def names = variant.flavors*.name
+                    if (names.contains("reactNative51") || names.contains("reactNative55")) {
+                        setIgnore(true)
+                    }
+                }
+            }
         }
     }
 }
 
+allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/google'}
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url "$rootDir/../node_modules/react-native/android"
+        }
+        mavenLocal()
+        maven { url 'https://jitpack.io' }
+    }
+}
+
 ext {
-    buildToolsVersion = "27"
-    minSdkVersion = 16
+    buildToolsVersion = "27.0.3"
+    minSdkVersion = 19
     compileSdkVersion = 26
     targetSdkVersion = 26
     supportLibVersion = "27.0.0"

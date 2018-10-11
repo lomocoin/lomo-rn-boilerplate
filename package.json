@@ -11,6 +11,7 @@
     "ios-run-release": "react-native run-ios --configuration Release",
     "ios-codepush": "react-native run-ios --configuration Release && appcenter codepush release-react -a LoMoCoinTeam/Lomo-RN-Boilerplate-iOS -d Staging --plist-file ios/LomoRN/Info.plist",
     "android": "react-native run-android",
+    "rnn-android": "cd ./android && ./gradlew app:assembleDebug && ./gradlew installDebug",
     "android-run-release": "react-native run-android --variant=release",
     "android-codepush": "react-native run-android --variant=release && appcenter codepush release-react -a LoMoCoinTeam/Lomo-RN-Boilerplate-Android -d Staging",
     "android-log": "react-native log-android",
