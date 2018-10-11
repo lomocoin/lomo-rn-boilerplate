@@ -1,13 +1,13 @@
 import { inject, observer } from 'mobx-react/native';
 import React, { Component } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-import { NavigationInjectedProps } from 'react-navigation';
+// import { NavigationInjectedProps } from 'react-navigation';
 import Badge from '../../components/Common/Badge';
 import ViewContainer from '../../components/Common/ViewContainer';
 import ViewContent from '../../components/Common/ViewContent';
 import { CellContent, FormCell, FormControl } from '../../components/Form';
 import i18n from '../../i18n';
-import { navigate } from '../../navigation';
+// import { navigate } from '../../navigation';
 import { CommonStoreInjectedProps, UserStoreInjectedProps } from '../../stores';
 import { IMAGES, S, V } from '../../themes';
 
@@ -42,12 +42,12 @@ export default class Profile extends Component<Props> {
   }
 
   componentDidMount() {
-    const { navigation } = this.props;
+    // const { navigation } = this.props;
 
-    this.onDidFocusSub = navigation.addListener(
-      'didFocus',
-      this.componentDidFocused,
-    );
+    // this.onDidFocusSub = navigation.addListener(
+    //   'didFocus',
+    //   this.componentDidFocused,
+    // );
   }
 
   componentWillUnmount() {
@@ -62,7 +62,7 @@ export default class Profile extends Component<Props> {
   };
 
   openPage = (routeName: string) => () => {
-    navigate(routeName);
+    // navigate(routeName);
   };
 
   render() {

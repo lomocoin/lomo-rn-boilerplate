@@ -36,6 +36,7 @@
     "react-native-code-push": "^5.4.1",
     "react-native-device-info": "^0.22.4",
     "react-native-i18n": "^2.0.15",
+    "react-native-navigation": "^2.0.2576",
     "react-native-splash-screen": "^3.1.1",
     "react-native-toast-native": "git+https://github.com/lomocoin/react-native-toast-native#4a49c3e656d92e17d80a16824b56634c6bc4b22a",
     "react-native-vector-icons": "^5.0.0",

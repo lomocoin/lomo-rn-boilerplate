@@ -23,16 +23,16 @@ export default class TodoList extends Component<Props> {
   onDidFocusSub: NavigationEventSubscription | undefined;
 
   componentWillMount() {
-    const { navigation } = this.props;
+    // const { navigation } = this.props;
 
-    this.onDidFocusSub = navigation.addListener(
-      'didFocus',
-      this.componentDidFocused,
-    );
+    // this.onDidFocusSub = navigation.addListener(
+    //   'didFocus',
+    //   this.componentDidFocused,
+    // );
 
-    navigation.setParams({
-      hideTab: true,
-    });
+    // navigation.setParams({
+    //   hideTab: true,
+    // });
   }
 
   componentDidMount() {

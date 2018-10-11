@@ -6,6 +6,7 @@ import AuthStore from './Auth';
 import CommonStore from './Common';
 import TodoStore from './Todo';
 import UserStore from './User';
+export {default as storeProviderHOC} from './storeProviderHOC';
 
 configure({
   enforceActions: true,

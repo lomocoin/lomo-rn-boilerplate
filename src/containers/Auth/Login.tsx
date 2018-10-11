@@ -1,6 +1,12 @@
 import { inject, observer } from 'mobx-react/native';
 import React, { Component } from 'react';
-import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Keyboard,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Button, ButtonTypes } from '../../components/Button';
 import Header from '../../components/Common/Header';
 import Image from '../../components/Common/Image';
@@ -9,9 +15,17 @@ import ViewContent from '../../components/Common/ViewContent';
 import { CellContent, FormCell, FormControl } from '../../components/Form';
 import i18n from '../../i18n';
 import { navigate } from '../../navigation';
-import { AuthStoreInjectedProps, CommonStoreInjectedProps, UserStoreInjectedProps } from '../../stores';
+import {
+  AuthStoreInjectedProps,
+  CommonStoreInjectedProps,
+  UserStoreInjectedProps,
+} from '../../stores';
 import { IMAGES, S } from '../../themes';
 import showToast from '../../utils/Toast';
+import { Navigation } from 'react-native-navigation';
+import { PROFILE, TODOLIST, startHomeTab } from '..';
+const Icon = require('react-native-vector-icons/Ionicons');
+import { iconsMap, iconsLoaded } from '../../themes/base/icons';
 
 interface Props
   extends UserStoreInjectedProps,
@@ -23,6 +37,12 @@ interface State {
   username: string;
   password: string;
 }
+
+// var settingsIcon;
+// var settingsOutlineIcon;
+// var peopleIcon;
+// var iosNavigateOutline;
+// var iosNavigate;
 
 @inject('user', 'auth', 'common')
 @observer
@@ -67,8 +87,9 @@ export default class Login extends Component<Props, State> {
       .login(params)
       .then(() => user.getUser())
       .then(() => {
-        navigate('App');
-        common.hideLoading();
+        iconsLoaded.then(() => {
+          startHomeTab()
+        });
       })
       .catch(error => {
         showToast(error.message);
@@ -140,23 +161,19 @@ export default class Login extends Component<Props, State> {
             </FormCell>
           </FormControl>
           <View style={S.padding}>
-          <View style={S.flexRow}>
-            <Text
-              style={S.textDefaultLight}
-            >
-              {i18n.t('login_label_forgot_password')}
-            </Text>
-            <Text
+            <View style={S.flexRow}>
+              <Text style={S.textDefaultLight}>
+                {i18n.t('login_label_forgot_password')}
+              </Text>
+              <Text
                 style={[S.textDefaultLight, S.textUnderline, S.marginLeft5]}
                 onPress={this.openForgotPassword}
               >
                 {i18n.t('login_btn_forgot_password')}
               </Text>
-              </View>
+            </View>
             <View style={[S.flexRow, S.paddingTop10]}>
-              <Text
-                style={S.textDefaultLight}
-              >
+              <Text style={S.textDefaultLight}>
                 {i18n.t('login_label_signup')}
               </Text>
               <Text

@@ -36,7 +36,7 @@ interface State {
   countdown: number;
 }
 
-@inject('common', 'user', 'auth')
+// @inject('common', 'user', 'auth')
 @observer
 export default class Splash extends Component<Props, State> {
   showAdsCountdown: boolean;
