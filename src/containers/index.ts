@@ -32,7 +32,7 @@ export const startApp = () => {
       stack: {
         id: 'ROOT_STACK',
         children: [{
-          component: { name: LOGIN },
+          component: { name: SPLASH },
         }],
       },
     },
@@ -41,7 +41,7 @@ export const startApp = () => {
 };
 
 export const startHomeTab = () => {
-  iconsLoaded().then(() => {
+  iconsLoaded.then(() => {
     setRootToHomeTab();
   })
 }
@@ -90,4 +90,3 @@ function setRootToHomeTab() {
     },
   });
 }
-

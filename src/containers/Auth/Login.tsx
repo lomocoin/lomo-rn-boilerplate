@@ -24,7 +24,6 @@ import { IMAGES, S } from '../../themes';
 import showToast from '../../utils/Toast';
 import { Navigation } from 'react-native-navigation';
 import { REGISTER, startHomeTab } from '..';
-import { iconsLoaded } from '../../themes/base/icons';
 
 interface Props
   extends UserStoreInjectedProps,
@@ -80,9 +79,7 @@ export default class Login extends Component<Props, State> {
       .login(params)
       .then(() => user.getUser())
       .then(() => {
-        iconsLoaded.then(() => {
-          startHomeTab()
-        });
+        startHomeTab();
       })
       .catch(error => {
         showToast(error.message);

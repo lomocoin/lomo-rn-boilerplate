@@ -21,10 +21,6 @@ Navigation.events().registerAppLaunchedListener(()=>{
 
 YellowBox.ignoreWarnings(['RNToastNative']);
 
-const codePushOptions = {
-  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-};
-
 // @observer
 // class App extends Component {
 //   componentDidMount() {

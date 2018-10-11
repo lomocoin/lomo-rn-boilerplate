@@ -11,6 +11,13 @@ import i18n from '../i18n';
 import { AuthStoreInjectedProps, CommonStoreInjectedProps, hydrateStores, UserStoreInjectedProps } from '../stores';
 import { ApiError } from '../utils/axios';
 import showToast from '../utils/Toast';
+import { Navigation } from 'react-native-navigation';
+import { LOGIN, startHomeTab } from '.';
+import codePush from 'react-native-code-push';
+
+const codePushOptions = {
+  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
+};
 
 const styles = StyleSheet.create({
   skipButton: {
@@ -36,7 +43,8 @@ interface State {
   countdown: number;
 }
 
-// @inject('common', 'user', 'auth')
+@codePush(codePushOptions)
+@inject('common', 'user', 'auth')
 @observer
 export default class Splash extends Component<Props, State> {
   showAdsCountdown: boolean;
@@ -126,8 +134,16 @@ export default class Splash extends Component<Props, State> {
   };
 
   goToAppOrAuth = () => {
-    const { auth, navigation } = this.props;
-    navigation.navigate(auth.token ? 'App' : 'Auth');
+    const { auth } = this.props;
+    if (auth.token) {
+      startHomeTab();
+    } else {
+      Navigation.push(this.props.componetId, {
+        component: {
+          name: LOGIN
+        }
+      })
+    }
   };
 
   render() {
