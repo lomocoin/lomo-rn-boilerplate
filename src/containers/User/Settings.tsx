@@ -5,7 +5,6 @@ import codePush from 'react-native-code-push';
 import DeviceInfo from 'react-native-device-info';
 import { Button, ButtonTypes } from '../../components/Button';
 import Badge from '../../components/Common/Badge';
-import Header from '../../components/Common/Header';
 import ViewContainer from '../../components/Common/ViewContainer';
 import ViewContent from '../../components/Common/ViewContent';
 import { CellContent, FormCell, FormControl } from '../../components/Form';

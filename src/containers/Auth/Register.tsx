@@ -8,7 +8,6 @@ import ViewContainer from '../../components/Common/ViewContainer';
 import ViewContent from '../../components/Common/ViewContent';
 import { CellContent, FormCell, FormControl } from '../../components/Form';
 import i18n from '../../i18n';
-import { navigate } from '../../navigation';
 import { AuthStoreInjectedProps, CommonStoreInjectedProps, UserStoreInjectedProps } from '../../stores';
 import { IMAGES, S } from '../../themes';
 import showToast from '../../utils/Toast';

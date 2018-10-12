@@ -1,5 +1,4 @@
-  import { Navigation } from 'react-native-navigation';
-// import Ionicons from 'react-native-vector-icons/Ionicons';
+import { Navigation } from 'react-native-navigation';
 import { iconsMap, iconsLoaded } from '../themes/base/icons';
 
 import Splash from './Splash';

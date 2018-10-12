@@ -1,7 +1,7 @@
 import { inject, observer } from 'mobx-react/native';
 import React, { Component } from 'react';
 import { Image, StyleSheet, View } from 'react-native';
-// import { NavigationInjectedProps } from 'react-navigation';
+import { NavigationInjectedProps } from 'react-navigation';
 import Badge from '../../components/Common/Badge';
 import ViewContainer from '../../components/Common/ViewContainer';
 import ViewContent from '../../components/Common/ViewContent';
