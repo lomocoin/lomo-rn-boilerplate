@@ -112,7 +112,6 @@ export default class Settings extends Component<Props, State> {
 
     return (
       <ViewContainer>
-        <Header title={i18n.t('settings_title')} />
         <ViewContent scrollable>
           <FormControl>
             <FormCell onPress={this.openPage('Privacy')}>

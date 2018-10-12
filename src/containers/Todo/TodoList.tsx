@@ -11,6 +11,7 @@ import i18n from '../../i18n';
 import { TodoModel } from '../../models/Todo';
 import { TodoStoreInjectedProps, UserStoreInjectedProps } from '../../stores';
 import showToast from '../../utils/Toast';
+import { Navigation } from 'react-native-navigation';
 
 interface Props
   extends NavigationInjectedProps,
@@ -23,16 +24,11 @@ export default class TodoList extends Component<Props> {
   onDidFocusSub: NavigationEventSubscription | undefined;
 
   componentWillMount() {
-    // const { navigation } = this.props;
-
-    // this.onDidFocusSub = navigation.addListener(
-    //   'didFocus',
-    //   this.componentDidFocused,
-    // );
-
-    // navigation.setParams({
-    //   hideTab: true,
-    // });
+    Navigation.events().registerBottomTabSelectedListener(({ selectedTabIndex, unselectedTabIndex }) => {
+      if (selectedTabIndex === 1) {
+        this.componentDidFocused();
+      }
+    });
   }
 
   componentDidMount() {

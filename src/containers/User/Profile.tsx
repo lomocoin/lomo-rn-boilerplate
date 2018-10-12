@@ -10,6 +10,8 @@ import i18n from '../../i18n';
 // import { navigate } from '../../navigation';
 import { CommonStoreInjectedProps, UserStoreInjectedProps } from '../../stores';
 import { IMAGES, S, V } from '../../themes';
+import { Navigation } from 'react-native-navigation';
+import { SETTINGS } from '..';
 
 const styles = StyleSheet.create({
   userAvatarContainer: {
@@ -42,12 +44,11 @@ export default class Profile extends Component<Props> {
   }
 
   componentDidMount() {
-    // const { navigation } = this.props;
-
-    // this.onDidFocusSub = navigation.addListener(
-    //   'didFocus',
-    //   this.componentDidFocused,
-    // );
+    Navigation.events().registerBottomTabSelectedListener(({ selectedTabIndex, unselectedTabIndex }) => {
+      if (selectedTabIndex === 0) {
+        this.componentDidFocused();
+      }
+    });
   }
 
   componentWillUnmount() {
@@ -62,7 +63,19 @@ export default class Profile extends Component<Props> {
   };
 
   openPage = (routeName: string) => () => {
-    // navigate(routeName);
+    Navigation.push(this.props.componentId, {
+      component: {
+        name: SETTINGS,
+        options: {
+          topBar: {
+            title: {
+              text: 'Settings',
+            },
+          },
+          bottomTabs: { visible: false },
+        },
+      },
+    });
   };
 
   render() {

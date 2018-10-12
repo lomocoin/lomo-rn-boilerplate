@@ -25,6 +25,7 @@ Screens.set(LOGIN, Login);
 Screens.set(REGISTER, Register);
 Screens.set(PROFILE, Profile);
 Screens.set(TODOLIST, TodoList);
+Screens.set(SETTINGS, Settings);
 
 export const startApp = () => {
   Navigation.setRoot({
