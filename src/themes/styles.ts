@@ -21,7 +21,7 @@ export default (V: VType) =>
       backgroundColor: V.secondaryBgColor,
     },
     bgWarn: {
-      backgroundColor: V.warnColor,
+      backgroundColor: V.warningColor,
     },
     bgWhite: {
       backgroundColor: V.whiteColor,
@@ -37,7 +37,7 @@ export default (V: VType) =>
       color: V.secondaryColor,
     },
     colorWarn: {
-      color: V.warnColor,
+      color: V.warningColor,
     },
     colorSucces: {
       color: V.successColor,

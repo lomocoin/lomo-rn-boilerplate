@@ -1,48 +1,52 @@
-import { inject, observer } from 'mobx-react/native';
+import { observer } from 'mobx-react/native';
 import React, { Component } from 'react';
-import { Keyboard, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Keyboard,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import { Button, ButtonTypes } from '../../components/Button';
-import Header from '../../components/Common/Header';
-import Image from '../../components/Common/Image';
-import ViewContainer from '../../components/Common/ViewContainer';
-import ViewContent from '../../components/Common/ViewContent';
+import { Header, ViewContainer, ViewContent } from '../../components/Common';
 import { CellContent, FormCell, FormControl } from '../../components/Form';
 import i18n from '../../i18n';
 import { navigate } from '../../navigation';
-import { AuthStoreInjectedProps, CommonStoreInjectedProps, UserStoreInjectedProps } from '../../stores';
-import { IMAGES, S } from '../../themes';
+import {
+  IAuthStoreInjectedProps,
+  injectStores,
+  IUiStoreInjectedProps,
+  IUserStoreInjectedProps,
+} from '../../stores';
+import { Icon, S } from '../../themes';
 import showToast from '../../utils/Toast';
 
-interface Props
-  extends UserStoreInjectedProps,
-    AuthStoreInjectedProps,
-    CommonStoreInjectedProps {}
+interface IProps
+  extends IUserStoreInjectedProps,
+    IAuthStoreInjectedProps,
+    IUiStoreInjectedProps {}
 
-interface State {
+interface IState {
   showPassword: boolean;
   username: string;
   password: string;
 }
 
-@inject('user', 'auth', 'common')
+@injectStores('user', 'auth', 'ui')
 @observer
-export default class Login extends Component<Props, State> {
+export default class Login extends Component<IProps, IState> {
   state = {
     showPassword: true,
     username: '',
     password: '',
   };
 
-  constructor(props: Props) {
-    super(props);
-  }
-
   openForgotPassword = () => {
     navigate('ForgotPassword');
   };
 
   doLogin = () => {
-    const { auth, user, common } = this.props;
+    const { auth, user, ui } = this.props;
     const { username, password } = this.state;
 
     if (!username || username.length === 0) {
@@ -56,7 +60,7 @@ export default class Login extends Component<Props, State> {
     }
 
     Keyboard.dismiss();
-    common.showLoading();
+    ui.showLoading();
 
     const params = {
       username,
@@ -67,12 +71,12 @@ export default class Login extends Component<Props, State> {
       .login(params)
       .then(() => user.getUser())
       .then(() => {
+        ui.hideLoading();
         navigate('App');
-        common.hideLoading();
       })
       .catch(error => {
+        ui.hideLoading();
         showToast(error.message);
-        common.hideLoading();
       });
   };
 
@@ -101,14 +105,10 @@ export default class Login extends Component<Props, State> {
   render() {
     const { showPassword } = this.state;
 
-    const image = showPassword
-      ? IMAGES.icon_password_unvisible
-      : IMAGES.icon_password_visible;
-
     return (
       <ViewContainer>
         <Header title={i18n.t('login_title')} hideBackButton />
-        <ViewContent>
+        <ViewContent scrollable>
           <FormControl>
             <FormCell>
               <CellContent>{i18n.t('login_label_username')}</CellContent>
@@ -134,29 +134,28 @@ export default class Login extends Component<Props, State> {
               </CellContent>
               <CellContent>
                 <TouchableOpacity onPress={this.toggleShowPassword}>
-                  <Image size={15} source={image} />
+                  <Icon
+                    name={showPassword ? 'eye-close' : 'eye-open'}
+                    size={15}
+                  />
                 </TouchableOpacity>
               </CellContent>
             </FormCell>
           </FormControl>
           <View style={S.padding}>
-          <View style={S.flexRow}>
-            <Text
-              style={S.textDefaultLight}
-            >
-              {i18n.t('login_label_forgot_password')}
-            </Text>
-            <Text
+            <View style={S.flexRow}>
+              <Text style={S.textDefaultLight}>
+                {i18n.t('login_label_forgot_password')}
+              </Text>
+              <Text
                 style={[S.textDefaultLight, S.textUnderline, S.marginLeft5]}
                 onPress={this.openForgotPassword}
               >
                 {i18n.t('login_btn_forgot_password')}
               </Text>
-              </View>
+            </View>
             <View style={[S.flexRow, S.paddingTop10]}>
-              <Text
-                style={S.textDefaultLight}
-              >
+              <Text style={S.textDefaultLight}>
                 {i18n.t('login_label_signup')}
               </Text>
               <Text

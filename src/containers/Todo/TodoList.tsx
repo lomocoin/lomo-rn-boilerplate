@@ -1,25 +1,32 @@
-import { inject, observer } from 'mobx-react/native';
+import { observer } from 'mobx-react/native';
 import React, { Component } from 'react';
 import { FlatList } from 'react-native';
-import { NavigationEventSubscription, NavigationInjectedProps } from 'react-navigation';
+import {
+  NavigationEventSubscription,
+  NavigationInjectedProps,
+} from 'react-navigation';
 import Header from '../../components/Common/Header';
 import ViewContainer from '../../components/Common/ViewContainer';
 import ViewContent from '../../components/Common/ViewContent';
 import { TodoAdd } from '../../components/Todo/TodoAdd';
 import TodoItem from '../../components/Todo/TodoItem';
 import i18n from '../../i18n';
-import { TodoModel } from '../../models/Todo';
-import { TodoStoreInjectedProps, UserStoreInjectedProps } from '../../stores';
+import {
+  injectStores,
+  ITodoStoreInjectedProps,
+  IUserStoreInjectedProps,
+} from '../../stores';
+import { ITodoModel } from '../../stores/Todo/TodoModel';
 import showToast from '../../utils/Toast';
 
-interface Props
+interface IProps
   extends NavigationInjectedProps,
-    UserStoreInjectedProps,
-    TodoStoreInjectedProps {}
+    IUserStoreInjectedProps,
+    ITodoStoreInjectedProps {}
 
-@inject('user', 'todo')
+@injectStores('user', 'todo')
 @observer
-export default class TodoList extends Component<Props> {
+export default class TodoList extends Component<IProps> {
   onDidFocusSub: NavigationEventSubscription | undefined;
 
   componentWillMount() {
@@ -29,14 +36,6 @@ export default class TodoList extends Component<Props> {
       'didFocus',
       this.componentDidFocused,
     );
-
-    navigation.setParams({
-      hideTab: true,
-    });
-  }
-
-  componentDidMount() {
-    this.refreshTodoList();
   }
 
   componentWillUnmount() {
@@ -51,44 +50,42 @@ export default class TodoList extends Component<Props> {
 
   refreshTodoList = () => {
     const { todo } = this.props;
-    todo.getTodos();
+    todo.getTodoList();
   };
-
-  keyExtractor = (item: TodoModel) => `${item.id}`;
 
   handleAddTodo = (todoText: string) => {
     const { todo } = this.props;
     todo.addTodo(todoText);
-  }
+  };
 
-  handleToggleCheck = (id: number) => {
+  handleCompleteTodo = (id: number) => {
     const { todo } = this.props;
     todo.checkTodo(id).then(() => {
-      showToast(i18n.t('todo_notify_completed'))
+      showToast(i18n.t('todo_notify_completed'));
     });
   };
 
-  handleSelectItem = (id: number) => {
+  handleDeleteTodo = (id: number) => {
     const { todo } = this.props;
     todo.deleteTodo(id).then(() => {
-      showToast(i18n.t('todo_notify_deleted'))
+      showToast(i18n.t('todo_notify_deleted'));
     });
   };
 
-  renderTodoItem = ({ item }: { item: TodoModel }) => {
+  keyExtractor = (item: ITodoModel) => `${item.id}`;
+
+  renderTodoItem = ({ item }: { item: ITodoModel }) => {
     return (
       <TodoItem
-        toggleCheck={this.handleToggleCheck}
-        selectItem={this.handleSelectItem}
         item={item}
-        id={item.id}
+        onComplete={this.handleCompleteTodo}
+        onDelete={this.handleDeleteTodo}
       />
     );
   };
 
   render() {
     const { todo } = this.props;
-    const todoList = todo.todoList.filter(item => !item.checked);
 
     return (
       <ViewContainer>
@@ -96,11 +93,11 @@ export default class TodoList extends Component<Props> {
         <ViewContent bounces>
           <TodoAdd onAddTodo={this.handleAddTodo} />
           <FlatList
-            renderItem={this.renderTodoItem}
-            onRefresh={this.refreshTodoList}
+            data={todo.openTodos}
             refreshing={todo.isFetching}
             keyExtractor={this.keyExtractor}
-            data={todoList}
+            renderItem={this.renderTodoItem}
+            onRefresh={this.refreshTodoList}
           />
         </ViewContent>
       </ViewContainer>

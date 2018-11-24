@@ -1,7 +1,7 @@
 import { createSwitchNavigator } from 'react-navigation';
-import AuthStackNav from './AuthStackNav';
+import Splash from '../Splash';
 import AppStackNav from './AppStackNav';
-import Splash from '../containers/Splash';
+import AuthStackNav from './AuthStackNav';
 
 export default createSwitchNavigator(
   {

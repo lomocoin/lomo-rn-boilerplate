@@ -1,5 +1,14 @@
 import React, { PureComponent, ReactNode } from 'react';
-import { Image, ImagePropertiesSourceOptions, KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View, ViewStyle } from 'react-native';
+import {
+  Image,
+  ImagePropertiesSourceOptions,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { V } from '../../themes';
 
 const styles = StyleSheet.create({
@@ -17,29 +26,21 @@ const styles = StyleSheet.create({
   },
 });
 
-interface Props {
+interface IProps {
   scrollable?: boolean;
   bounces?: boolean;
   keyboardAvoidingView?: boolean;
-  backgroudImage?: ImagePropertiesSourceOptions;
+  backgroundImage?: ImagePropertiesSourceOptions;
   children?: ReactNode;
   style?: ViewStyle;
 }
 
-export function withKeyboardAvoidingView(Comp: any) {
-  return (props: any) => (
-    <KeyboardAvoidingView behavior="padding">
-      <Comp {...props} />
-    </KeyboardAvoidingView>
-  );
-}
-
-export default class ViewContent extends PureComponent<Props> {
+export default class ViewContent extends PureComponent<IProps> {
   static defaultProps = {
     scrollable: false,
     bounces: false,
     keyboardAvoidingView: false,
-    backgroudImage: null,
+    backgroundImage: null,
   };
 
   render() {
@@ -47,17 +48,17 @@ export default class ViewContent extends PureComponent<Props> {
       scrollable,
       bounces,
       keyboardAvoidingView,
-      backgroudImage,
+      backgroundImage,
       children,
       style,
     } = this.props;
 
     const composedStyles = [styles.container, style];
 
-    let backgroudImageCmp;
-    if (backgroudImage) {
-      backgroudImageCmp = (
-        <Image source={backgroudImage} style={styles.backgroundImage} />
+    let backgroundImageCmp;
+    if (backgroundImage) {
+      backgroundImageCmp = (
+        <Image source={backgroundImage} style={styles.backgroundImage} />
       );
     }
 
@@ -65,14 +66,14 @@ export default class ViewContent extends PureComponent<Props> {
     if (scrollable) {
       contentCmp = (
         <ScrollView style={composedStyles} bounces={bounces}>
-          {backgroudImageCmp}
+          {backgroundImageCmp}
           {children}
         </ScrollView>
       );
     } else {
       contentCmp = (
         <View style={composedStyles}>
-          {backgroudImageCmp}
+          {backgroundImageCmp}
           {children}
         </View>
       );

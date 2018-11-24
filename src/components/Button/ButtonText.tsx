@@ -1,71 +1,71 @@
-import React, { ReactNode, PureComponent } from 'react';
-import { Text, StyleSheet } from 'react-native';
+import React, { PureComponent } from 'react';
+import { StyleProp, StyleSheet, Text, TextStyle } from 'react-native';
 import { V } from '../../themes';
-import { ButtonTypes } from './Button';
+import { ButtonTypes } from './ButtonTypes';
 
 const styles = StyleSheet.create({
   text: {
     fontSize: V.btnFontSize,
+    lineHeight: V.btnFontSize + 2,
     textAlign: 'center',
-    marginTop: (V.btnHeight - V.btnFontSize) / 2,
-    marginBottom: (V.btnHeight - V.btnFontSize) / 2,
   },
-  miniText: {
-    fontSize: V.btnMiniFontSize,
-    marginTop: (V.btnMiniHeight * V.btnMiniFontSize - V.btnMiniFontSize) / 2,
-    marginBottom: (V.btnMiniHeight * V.btnMiniFontSize - V.btnMiniFontSize) / 2,
+  textMini: {
+    fontSize: V.btnFontSizeMini,
+    lineHeight: V.btnFontSizeMini + 2,
   },
-  defaultText: {
-    color: V.defaultColor,
-  },
-  primaryText: {
-    color: V.whiteColor,
-  },
-  dangerText: {
-    color: V.whiteColor,
-  },
-  disabledText: {
-    color: V.secondaryColor,
+  textFlat: {
+    fontSize: V.defaultFontSize,
   },
 });
 
-const getTextStyles = (type: ButtonTypes, mini: boolean, disabled: boolean) => {
-  const config = [];
-
+const getTextColor = (type?: ButtonTypes, isDisabled?: boolean) => {
+  if (isDisabled) {
+    return V.secondaryColor;
+  }
   switch (type) {
     case ButtonTypes.primary:
-      config.push(styles.primaryText);
-      break;
+      return V.whiteColor;
     case ButtonTypes.danger:
-      config.push(styles.dangerText);
-      break;
+      return V.whiteColor;
+    case ButtonTypes.success:
+      return V.whiteColor;
+    case ButtonTypes.transparent:
+      return V.whiteColor;
     case ButtonTypes.default:
+      return V.whiteColor;
     default:
-      config.push(styles.defaultText);
+      return V.primaryColor;
   }
-  if (mini) {
-    config.push(styles.miniText);
-  }
-  if (disabled) {
-    config.push(styles.disabledText);
-  }
-
-  return config;
 };
 
-interface Props {
+interface IProps {
   type?: ButtonTypes;
   mini?: boolean;
+  flat?: boolean;
   disabled?: boolean;
-  children: ReactNode;
+  children: string;
+  textStyle?: StyleProp<TextStyle>;
 }
 
-export default class ButtonText extends PureComponent<Props> {
+export default class ButtonText extends PureComponent<IProps> {
   render() {
-    const { type, mini, disabled, children } = this.props;
+    const { type, mini, flat, disabled, textStyle, children } = this.props;
 
-    const textStyles = getTextStyles(type!, mini!, disabled!);
+    const color = getTextColor(type, disabled);
 
-    return <Text style={[styles.text, ...textStyles]}>{children}</Text>;
+    return (
+      <Text
+        style={[
+          styles.text,
+          { color },
+          flat ? styles.textFlat : false,
+          mini ? styles.textMini : false,
+          textStyle,
+        ]}
+        numberOfLines={1}
+      >
+        {children}
+      </Text>
+    );
   }
 }

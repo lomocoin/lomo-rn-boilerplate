@@ -1,58 +1,63 @@
 import { configure } from 'mobx';
-import { enableLogging } from 'mobx-logger';
-import { create } from 'mobx-persist';
-import { AsyncStorage } from 'react-native';
-import AuthStore from './Auth';
-import CommonStore from './Common';
-import TodoStore from './Todo';
-import UserStore from './User';
+import { flow, Instance, setLivelynessChecking, types } from 'mobx-state-tree';
+// Stores
+import { Auth as auth, IAuthStore } from './Auth';
+import { ITodoStore, Todo as todo } from './Todo';
+import { IUiStore, UI as ui } from './Ui';
+import { IUserStore, User as user } from './User';
+export { default as injectStores } from './injectStores';
 
 configure({
-  enforceActions: true,
+  enforceActions: 'always',
 });
 
-enableLogging({
-  predicate: () => __DEV__ && Boolean(window.navigator.userAgent),
-  action: true,
-  reaction: false,
-  transaction: false,
-  compute: false,
-});
+export const STORE_VERSION = '010006';
 
-export const common = new CommonStore();
-export const auth = new AuthStore();
-export const user = new UserStore();
-export const todo = new TodoStore();
+export const Store = types
+  .model('Store', {
+    ui,
+    auth,
+    user,
+    todo,
+    isHydrated: false,
+  })
+  .actions(self => ({
+    hydrate: flow(function* hydrate() {
+      yield self.ui.hydrate(STORE_VERSION);
+      yield self.auth.hydrate(STORE_VERSION);
+      yield self.user.hydrate(STORE_VERSION);
+      yield self.todo.hydrate(STORE_VERSION);
+      self.isHydrated = true;
+      return self;
+    }),
+  }))
+  .create({
+    ui: {},
+    auth: {},
+    user: {},
+    todo: {},
+  });
 
-export interface CommonStoreInjectedProps {
-  common: CommonStore;
+if (__DEV__) {
+  setLivelynessChecking('error');
+  // // tslint:disable-next-line
+  // const Reactotron = require('reactotron-react-native').default;
+  // // @ts-ignore
+  // Reactotron.trackMstNode(Store);
 }
 
-export interface AuthStoreInjectedProps {
-  auth: AuthStore;
+export type IStore = Instance<typeof Store>;
+
+export interface IUiStoreInjectedProps {
+  ui: IUiStore;
+}
+export interface IAuthStoreInjectedProps {
+  auth: IAuthStore;
+}
+export interface IUserStoreInjectedProps {
+  user: IUserStore;
 }
 
-export interface UserStoreInjectedProps {
-  user: UserStore;
+export interface ITodoStoreInjectedProps {
+  todo: ITodoStore;
 }
-
-export interface TodoStoreInjectedProps {
-  todo: TodoStore;
-}
-
-const hydrate = create({
-  storage: AsyncStorage,
-});
-
-export async function hydrateStores() {
-  await hydrate('common', common);
-  await hydrate('auth', auth);
-  return true;
-}
-
-export default {
-  common,
-  auth,
-  user,
-  todo,
-};

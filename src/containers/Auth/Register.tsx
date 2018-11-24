@@ -1,32 +1,37 @@
-import { inject } from 'mobx-react/native';
+import { observer } from 'mobx-react/native';
 import React, { Component } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { Button, ButtonTypes } from '../../components/Button';
 import Header from '../../components/Common/Header';
-import Image from '../../components/Common/Image';
 import ViewContainer from '../../components/Common/ViewContainer';
 import ViewContent from '../../components/Common/ViewContent';
 import { CellContent, FormCell, FormControl } from '../../components/Form';
 import i18n from '../../i18n';
 import { navigate } from '../../navigation';
-import { AuthStoreInjectedProps, CommonStoreInjectedProps, UserStoreInjectedProps } from '../../stores';
-import { IMAGES, S } from '../../themes';
+import {
+  IAuthStoreInjectedProps,
+  injectStores,
+  IUiStoreInjectedProps,
+  IUserStoreInjectedProps,
+} from '../../stores';
+import { Icon, S } from '../../themes';
 import showToast from '../../utils/Toast';
 
-interface Props
-  extends AuthStoreInjectedProps,
-    UserStoreInjectedProps,
-    CommonStoreInjectedProps {}
+interface IProps
+  extends IAuthStoreInjectedProps,
+    IUserStoreInjectedProps,
+    IUiStoreInjectedProps {}
 
-interface State {
+interface IState {
   username: string;
   password: string;
   repeatPassword: string;
   showPassword: boolean;
 }
 
-@inject('auth', 'user', 'common')
-export default class Register extends Component<Props, State> {
+@injectStores('auth', 'user', 'ui')
+@observer
+export default class Register extends Component<IProps, IState> {
   state = {
     username: '',
     password: '',
@@ -34,33 +39,29 @@ export default class Register extends Component<Props, State> {
     showPassword: true,
   };
 
-  constructor(props: Props) {
-    super(props);
-  }
-
   register = () => {
     if (!this.passVerification()) {
       return;
     }
-    const { auth, user, common } = this.props;
+    const { auth, user, ui } = this.props;
     const { username, password } = this.state;
     const params = {
       username,
       password,
     };
 
-    common.showLoading();
+    ui.showLoading();
 
     auth
       .register(params)
       .then(() => user.getUser())
       .then(() => {
         navigate('App');
-        common.hideLoading();
+        ui.hideLoading();
       })
       .catch(error => {
         showToast(error);
-        common.hideLoading();
+        ui.hideLoading();
       });
   };
 
@@ -121,13 +122,10 @@ export default class Register extends Component<Props, State> {
   };
 
   render() {
-    const pwdImage = this.state.showPassword
-      ? IMAGES.icon_password_unvisible
-      : IMAGES.icon_password_visible;
-
+    const { showPassword } = this.state;
     return (
       <ViewContainer>
-        <Header title={i18n.t('register_title')} hideBackButton />
+        <Header title={i18n.t('register_title')} />
         <ViewContent scrollable keyboardAvoidingView>
           <FormControl>
             <FormCell>
@@ -150,14 +148,17 @@ export default class Register extends Component<Props, State> {
               <CellContent>
                 <TextInput
                   underlineColorAndroid="transparent"
-                  secureTextEntry={this.state.showPassword}
+                  secureTextEntry={showPassword}
                   onBlur={this.checkPassword}
                   onChangeText={this.setPassword}
                 />
               </CellContent>
               <CellContent>
                 <TouchableOpacity onPress={this.toggleShowPassword}>
-                  <Image source={pwdImage} size={15} />
+                  <Icon
+                    name={showPassword ? 'eye-close' : 'eye-open'}
+                    size={15}
+                  />
                 </TouchableOpacity>
               </CellContent>
             </FormCell>

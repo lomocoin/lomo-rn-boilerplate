@@ -1,11 +1,10 @@
 import React from 'react';
 import { Text } from 'react-native';
 import { createBottomTabNavigator } from 'react-navigation';
-import UserProfile from '../containers/User/Profile';
 import TodoList from '../containers/Todo/TodoList';
+import UserProfile from '../containers/User/Profile';
 import i18n from '../i18n';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { V, S } from '../themes';
+import { Icon, S, V } from '../themes';
 
 export default createBottomTabNavigator(
   {
@@ -19,20 +18,16 @@ export default createBottomTabNavigator(
         let iconName;
         switch (routeName) {
           case 'UserMain':
-            iconName = `ios-home`;
+            iconName = `business-card`;
             break;
           case 'TodoMain':
-            iconName = `ios-list`;
+            iconName = `message`;
             break;
           default:
             iconName = 'ios-alert';
         }
         return (
-          <Ionicons
-            name={iconName}
-            size={25}
-            color={tintColor || V.defaultColor}
-          />
+          <Icon name={iconName} size={25} color={tintColor || V.defaultColor} />
         );
       },
       tabBarLabel: ({ tintColor }) => {
@@ -66,6 +61,7 @@ export default createBottomTabNavigator(
       activeTintColor: V.primaryColor,
       inactiveTintColor: V.secondaryColor,
       tabStyle: {
+        height: 60,
         backgroundColor: V.whiteColor,
         paddingVertical: 5,
       },

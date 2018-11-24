@@ -1,16 +1,16 @@
 import React, { PureComponent } from 'react';
-import { Image, ImageResizeMode, StyleProp, ImageStyle } from 'react-native';
+import { Image, ImageResizeMode, ImageStyle, StyleProp } from 'react-native';
 
-interface Props {
+interface IProps {
   size?: number;
-  width?: number;
+  width?: number | string;
   height?: number;
   resizeMode?: ImageResizeMode;
   style?: StyleProp<ImageStyle>;
   source: any;
 }
 
-export default class ImageWrapper extends PureComponent<Props> {
+export default class ImageWrapper extends PureComponent<IProps> {
   static displayName = 'Image';
   static defaultProps = {
     size: 50,

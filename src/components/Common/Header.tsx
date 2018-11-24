@@ -1,8 +1,7 @@
 import React, { ReactNode } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
 import { goBack } from '../../navigation';
-import { S, V } from '../../themes';
+import { Icon, S, V } from '../../themes';
 import Image from './Image';
 
 const styles = StyleSheet.create({
@@ -79,7 +78,7 @@ export default class Header extends React.PureComponent<Props> {
         style={[S.flex, S.paddingHorizontal, S.flexJustifyCenter]}
         onPress={this.doGoBack}
       >
-        <Icon name="ios-arrow-back" size={30} color={V.headerColor} />
+        <Icon name="back" size={30} color={V.headerColor} />
       </TouchableOpacity>
     );
   };

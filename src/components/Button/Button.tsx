@@ -1,119 +1,106 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, ReactNode } from 'react';
 import {
-  StyleSheet,
-  TouchableOpacity,
-  TouchableNativeFeedback,
-  View,
   Platform,
-  TouchableHighlightProperties,
+  StyleProp,
+  StyleSheet,
+  TextStyle,
+  View,
+  ViewStyle,
 } from 'react-native';
-import ButtonText from './ButtonText';
 import { V } from '../../themes';
+import ButtonText from './ButtonText';
+import { ButtonTypes } from './ButtonTypes';
+import TouchableButton from './TouchableButton';
 
-export enum ButtonTypes {
-  primary = 'primary',
-  danger = 'danger',
-  default = 'default',
-}
+const styles = StyleSheet.create({
+  button: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
+    overflow: 'hidden',
+    height: V.btnHeight,
+    paddingHorizontal: V.paddingBase,
+    borderWidth: 0,
+  },
+  buttonFlat: {
+    height: 'auto',
+    backgroundColor: 'transparent',
+    borderWidth: 0,
+    paddingVertical: 5,
+    paddingHorizontal: 5,
+  },
+  buttonRaisedIOS: {
+    shadowColor: 'rgba(56, 58, 69, 1)',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowRadius: 3,
+    shadowOpacity: 1,
+  },
+  buttonRaisedAndroid: {
+    elevation: 4,
+  },
+});
 
-const getButtonStyles = (
-  type: ButtonTypes,
-  mini: boolean,
-  disabled: boolean,
-) => {
-  const config = [];
-
-  switch (type) {
-    case ButtonTypes.primary:
-      config.push(styles.primary);
-      break;
-    case ButtonTypes.danger:
-      config.push(styles.danger);
-      break;
-    case ButtonTypes.default:
-    default:
-      config.push(styles.default);
+const getBackgroundColor = (type?: ButtonTypes, isDisabled?: boolean) => {
+  if (isDisabled) {
+    return V.secondaryColor;
   }
-
-  if (mini) {
-    config.push(styles.mini);
-  }
-
-  if (disabled) {
-    config.push(styles.disabled);
-  }
-
-  return config;
-};
-
-const getUnderlayColor = (type: ButtonTypes) => {
   switch (type) {
     case ButtonTypes.primary:
       return V.primaryColor;
     case ButtonTypes.danger:
-      return V.warnColor;
+      return V.warningColor;
+    case ButtonTypes.success:
+      return V.successColor;
     case ButtonTypes.default:
     default:
       return V.defaultBgColor;
   }
 };
 
-const styles = StyleSheet.create({
-  touchable: {
-    borderRadius: V.btnBorderRadius,
-    alignSelf: 'center',
-  },
-  button: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    overflow: 'hidden',
-    alignItems: 'center',
-    borderRadius: V.btnBorderRadius,
-    borderWidth: V.borderWidth,
-    paddingLeft: V.gap15,
-    paddingRight: V.gap15,
-    borderColor: V.borderColor,
-    maxWidth: V.btnMaxWidth,
-  },
-  default: {
-    backgroundColor: V.defaultBgColor,
-  },
-  primary: {
-    backgroundColor: V.primaryColor,
-  },
-  danger: {
-    backgroundColor: V.warnColor,
-  },
-  disabled: {
-    borderColor: V.secondaryBgColor,
-  },
-  mini: {
-    paddingLeft: V.gap10,
-    paddingRight: V.gap10,
-  },
-});
-
-interface Props {
+export interface IButtonProps {
   type?: ButtonTypes;
   disabled?: boolean;
   mini?: boolean;
+  raised?: boolean;
+  flat?: boolean;
+  /**
+   * Apply to the button a width equal to 100%
+   */
+  fullwidth: boolean;
+  autoWidth: boolean;
   marginTop?: number;
-  borderRadius?: number;
-  children: string;
-  style?: any;
-  onPress: () => void;
+  borderRadius: number;
+  borderColor?: string;
   isHighlight?: boolean; // 是否用TouchableHighlight组件
+  children: string | ReactNode;
+  cmpLeft?: ReactNode;
+  cmpRight?: ReactNode;
+  style?: StyleProp<ViewStyle>;
+  buttonStyle?: StyleProp<ViewStyle>;
+  textStyle?: StyleProp<TextStyle>;
+  testID?: string;
+  onPress: () => void;
 }
 
-export class Button extends PureComponent<Props> {
+export class Button extends PureComponent<IButtonProps> {
+  static displayName = 'Button';
   static defaultProps = {
     type: ButtonTypes.default,
     disabled: false,
     mini: false,
+    raised: false,
+    flat: false,
+    fullwidth: false,
+    autoWidth: false,
     marginTop: 0,
-    borderRadius: V.btnBorderRadius,
-    onPress: () => null,
+    borderRadius: undefined,
+    borderColor: undefined,
     isHighlight: false,
+    onPress: () => null,
   };
 
   handlePress = () => {
@@ -124,46 +111,84 @@ export class Button extends PureComponent<Props> {
   render() {
     const {
       type,
-      disabled,
       mini,
+      raised,
+      flat,
+      disabled,
+      fullwidth,
+      autoWidth,
       marginTop,
-      borderRadius,
-      style,
-      children,
+      borderRadius: customBorderRadius,
+      borderColor,
       isHighlight,
+      style,
+      buttonStyle,
+      textStyle,
+      cmpLeft,
+      cmpRight,
+      children,
+      testID,
     } = this.props;
-    const buttonStyles = getButtonStyles(type!, mini!, disabled!);
-    const TouchableButton =
-      Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
-    const extras: TouchableHighlightProperties = {};
+
+    // const extras: TouchableHighlightProperties = {};
+    const extras: any = {};
+    const backgroundColor = getBackgroundColor(type, disabled);
+    const borderRadius = isFinite(customBorderRadius)
+      ? customBorderRadius
+      : V.btnBorderRadius;
 
     if (isHighlight) {
-      extras.underlayColor = getUnderlayColor(type!);
+      extras.underlayColor = backgroundColor;
     }
 
     return (
       <View
         style={[
-          styles.touchable,
-          style,
-          { borderRadius },
           { marginTop },
+          raised && Platform.OS === 'ios' ? styles.buttonRaisedIOS : false,
+          { borderRadius },
+          style,
         ]}
       >
         <TouchableButton
-          {...extras}
+          testID={testID}
           disabled={disabled}
           onPress={this.handlePress}
         >
           <View
             style={[
               styles.button,
+              raised && Platform.OS === 'android'
+                ? styles.buttonRaisedAndroid
+                : false,
+              { backgroundColor },
               { borderRadius },
-              { minWidth: mini ? V.btnMiniMinWidth : V.btnMinWidth },
-              ...buttonStyles,
+              flat ? styles.buttonFlat : false,
+              !flat && !autoWidth ? { width: V.btnWidth } : false,
+              fullwidth ? { width: '100%' } : false,
+              borderColor
+                ? { borderColor, borderWidth: V.btnBorderWidth }
+                : false,
+              buttonStyle,
             ]}
           >
-            <ButtonText {...this.props}>{children}</ButtonText>
+            {cmpLeft}
+            {typeof children !== 'string' ? (
+              children
+            ) : (
+              <ButtonText
+                {...{
+                  type,
+                  mini,
+                  flat,
+                  disabled,
+                  textStyle,
+                }}
+              >
+                {children}
+              </ButtonText>
+            )}
+            {cmpRight}
           </View>
         </TouchableButton>
       </View>

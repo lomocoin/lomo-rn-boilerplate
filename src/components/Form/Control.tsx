@@ -8,23 +8,21 @@ const styles = StyleSheet.create({
   },
 });
 
-interface Props {
+interface IProps {
   children: ReactNode;
   style?: StyleProp<ViewStyle>;
 }
 
-export default class FormControl extends PureComponent<Props> {
+export default class FormControl extends PureComponent<IProps> {
   render() {
     const { children, style, ...others } = this.props;
 
     return (
       <View style={[styles.container, style]} {...others}>
-        {Children.map(
-          children,
-          (child, index) =>
-            React.isValidElement(child)
-              ? React.cloneElement<CellProps>(child, { isFirstCell: index === 0 })
-              : false,
+        {Children.map(children, (child, index) =>
+          React.isValidElement(child)
+            ? React.cloneElement<CellProps>(child, { isFirstCell: index === 0 })
+            : false,
         )}
       </View>
     );

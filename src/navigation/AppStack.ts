@@ -1,17 +1,15 @@
 import { createStackNavigator } from 'react-navigation';
-
-// App Screens
-import AppTabbar from './AppTabbar';
 import Settings from '../containers/User/Settings';
+import AppTabBar from './AppTabBar';
 
 export default createStackNavigator(
   {
-    AppTabbar,
+    AppTabBar,
     Settings,
   },
   {
     headerMode: 'none',
-    initialRouteName: 'AppTabbar',
+    initialRouteName: 'AppTabBar',
     cardStyle: {
       shadowColor: 'transparent',
     },

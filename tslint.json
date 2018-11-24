@@ -1,15 +1,23 @@
 {
+  "rulesDirectory": [
+    "tslint-plugin-prettier"
+  ],
   "extends": [
     "tslint:latest",
     "tslint-react",
     "tslint-config-prettier"
   ],
+  "lintOptions": {
+    "typeCheck": true
+  },
   "rules": {
     "curly": true,
-    "interface-name": false,
+    "interface-name": true,
     "no-unused-expression": true,
-    "no-unused-variable": true,
-    "member-access": [true, "no-public"],
+    "member-access": [
+      true,
+      "no-public"
+    ],
     "member-ordering": false,
     "object-literal-sort-keys": false,
     "no-submodule-imports": false,
@@ -26,6 +34,7 @@
     "prefer-const": true,
     "no-consecutive-blank-lines": true,
     "import-spacing": true,
-    "no-redundant-jsdoc": true
+    "no-redundant-jsdoc": true,
+    "prettier": true
   }
 }

@@ -1,7 +1,12 @@
 import React, { ComponentClass, PureComponent, ReactNode } from 'react';
-import { StyleProp, StyleSheet, TouchableHighlight, View, ViewStyle } from 'react-native';
-import Icon from 'react-native-vector-icons/Entypo';
-import { S, V } from '../../themes';
+import {
+  StyleProp,
+  StyleSheet,
+  TouchableHighlight,
+  View,
+  ViewStyle,
+} from 'react-native';
+import { Icon, S, V } from '../../themes';
 
 const styles = StyleSheet.create({
   cell: {
@@ -57,7 +62,7 @@ export default class FormCell extends PureComponent<Props> {
     let mainContent;
     let extraContent;
 
-    mainContent = React.Children.map(children, (child) => {
+    mainContent = React.Children.map(children, child => {
       if (!React.isValidElement(child)) {
         return false;
       }
@@ -79,7 +84,7 @@ export default class FormCell extends PureComponent<Props> {
       extraContent = (
         <View style={styles.accessContainer}>
           <Icon
-            name="chevron-thin-right"
+            name="chevron-right"
             size={V.titleFontSize}
             color={V.secondaryColor}
           />

@@ -1,4 +1,4 @@
-import { Platform, Dimensions, I18nManager } from 'react-native';
+import { Dimensions, I18nManager, Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 
 const isRTL = I18nManager.isRTL;
@@ -49,12 +49,20 @@ export default {
   btnHeight: 42,
   btnMiniHeight: 1.9,
   btnFontSize: 18,
-  btnMiniFontSize: 14,
+  btnFontSizeMini: 14,
   btnBorderRadius: 15,
-  btnMaxWidth: 320,
+  btnWidth: 320,
   btnMinWidth: 250,
-  btnMiniMinWidth: 60,
+  btnBorderWidth: 1,
 
   // forms
   fromCellMinHeight: 60,
+
+  // ProgressBar
+  progressBarBgColor: 'transparent',
+  progressBarFgColor: '#222222',
+  progressBarBorderWidth: 1,
+  progressBarBorderColor: '#222222',
+  progressBarRadius: 15,
+  progressBarSize: 10,
 };

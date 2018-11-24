@@ -1,20 +1,28 @@
 import {
   NavigationActions,
+  NavigationContainerComponent,
   NavigationParams,
-  NavigationScreenProp,
   StackActions,
 } from 'react-navigation';
 
-let navigation: NavigationScreenProp<any>;
+let navigationContainer: NavigationContainerComponent;
 let lastNavigateTime = Date.now();
 
-export function setNavigator(container: any) {
-  navigation = container;
+export function tabNeedAuth(routeName: string) {
+  return /Todo/.test(routeName);
+}
+
+export function setNavigator(container: NavigationContainerComponent) {
+  navigationContainer = container;
+}
+
+export function setNavigationParams(params: any) {
+  navigationContainer.props.navigation!.setParams(params);
 }
 
 export function navigateReset(routeName: string, params?: NavigationParams) {
-  if (navigation) {
-    navigation.dispatch(
+  if (navigationContainer) {
+    navigationContainer.dispatch(
       StackActions.reset({
         index: 0,
         actions: [
@@ -33,8 +41,8 @@ export function navigate(
   params?: NavigationParams,
   key: string = '',
 ) {
-  if (navigation && lastNavigateTime + 500 < Date.now()) {
-    navigation.dispatch(
+  if (navigationContainer && lastNavigateTime + 500 < Date.now()) {
+    navigationContainer.dispatch(
       NavigationActions.navigate({
         routeName,
         params,
@@ -46,8 +54,8 @@ export function navigate(
 }
 
 export function push(routeName: string, params?: NavigationParams) {
-  if (navigation && lastNavigateTime + 500 < Date.now()) {
-    navigation.dispatch(
+  if (navigationContainer && lastNavigateTime + 500 < Date.now()) {
+    navigationContainer.dispatch(
       StackActions.push({
         routeName,
         params,
@@ -58,32 +66,49 @@ export function push(routeName: string, params?: NavigationParams) {
 }
 
 export function getCurrentRouteName(): string {
-  if (!navigation) {
+  if (!navigationContainer) {
     return '';
   }
-  const { state } = navigation;
-  const route = state && state.routes[state.index];
+
+  const { state } = navigationContainer.props.navigation as any;
+  const route = state.routes[state.index];
+
   return route ? route.routeName : '';
 }
 
 export function goBack(): boolean {
-  navigation.dispatch(NavigationActions.back());
+  navigationContainer.dispatch(NavigationActions.back());
   return true;
 }
 
 export function pop(numToPop: number) {
-  navigation.dispatch(
+  navigationContainer.dispatch(
     StackActions.pop({
       n: numToPop,
     }),
   );
 }
 
+export function replacePrevious(routeName: string, params?: NavigationParams) {
+  if (navigationContainer && lastNavigateTime + 500 < Date.now()) {
+    navigationContainer.dispatch(
+      StackActions.replace({
+        routeName,
+        params,
+      }),
+    );
+    lastNavigateTime = Date.now();
+  }
+}
+
 export default {
   setNavigator,
+  setNavigationParams,
   navigate,
   navigateReset,
   goBack,
   getCurrentRouteName,
   pop,
+  tabNeedAuth,
+  replacePrevious,
 };
