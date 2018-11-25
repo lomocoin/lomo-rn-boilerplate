@@ -4,11 +4,8 @@ import DeviceInfo from 'react-native-device-info';
 export enum ModulesNames {
   App = 'App',
   Auth = 'Auth',
-  Asset = 'Asset',
+  Todo = 'Todo',
   User = 'User',
-  Chat = 'Chat',
-  OtcFiat = 'OtcFiat',
-  OtcToken = 'OtcToken',
 }
 
 export enum ActionTypes {
@@ -80,7 +77,7 @@ class AnalyticsTracker {
     };
 
     if (__DEV__) {
-      // tslint:disable
+      // tslint:disable-next-line
       console.log(`${moduleName}_${pageName}_${functionName}_error:`, error);
     }
     Analytics.trackEvent(`${moduleName}_${pageName}`, data);

@@ -35,6 +35,7 @@ export default class App extends Component<{}, IState> {
 
   async componentDidMount() {
     AppCenter.setLogLevel(
+      // @ts-ignore (https://github.com/Microsoft/AppCenter-SDK-React-Native/issues/472)
       __DEV__ ? AppCenter.LogLevelDebug : AppCenter.LogLevelNone,
     );
     Crashes.setEnabled(!__DEV__);

@@ -31,9 +31,7 @@ function getErrorObject(response: AxiosResponse): IApiError {
   // No response data, probably no network or 500
   const status = response ? response.status : -1;
   let code = -1;
-  let message = response
-    ? i18n.t('error_network')
-    : i18n.t('error_unknown');
+  let message = response ? i18n.t('error_network') : i18n.t('error_unknown');
   if (response && response.data) {
     code = response.data.result ? response.data.result.code || -1 : -1;
     message =
