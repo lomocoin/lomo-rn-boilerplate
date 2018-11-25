@@ -5370,6 +5370,10 @@ minizlib@^1.1.0:
   dependencies:
     minipass "^2.2.1"
 
+mitt@^1.1.2:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-1.1.3.tgz#528c506238a05dce11cd914a741ea2cc332da9b8"
+
 mixin-deep@^1.2.0:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/mixin-deep/-/mixin-deep-1.3.1.tgz#a49e7268dce1a0d9698e45326c5626df3543d0fe"
@@ -6128,7 +6132,7 @@ prompts@^0.1.9:
     kleur "^2.0.1"
     sisteransi "^0.1.1"
 
-prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
+prop-types@^15.5.10, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.1, prop-types@^15.6.2:
   version "15.6.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.6.2.tgz#05d5ca77b4453e985d60fc7ff8c859094a497102"
   dependencies:
@@ -6208,6 +6212,10 @@ query-string@^6.1.0:
 quick-lru@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/quick-lru/-/quick-lru-1.1.0.tgz#4360b17c61136ad38078397ff11416e186dcfbb8"
+
+ramda@^0.25.0:
+  version "0.25.0"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.25.0.tgz#8fdf68231cffa90bc2f9460390a0cb74a29b29a9"
 
 randomatic@^3.0.0:
   version "3.0.0"
@@ -6502,6 +6510,24 @@ react@16.6.1:
     object-assign "^4.1.1"
     prop-types "^15.6.2"
     scheduler "^0.11.0"
+
+reactotron-core-client@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.1.0.tgz#d36f806eaf14a9f8c4595a9866f8cbfaafc1ee8c"
+
+reactotron-mst@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/reactotron-mst/-/reactotron-mst-2.1.0.tgz#bf97a3a40c96fa9e3c63e8470b81340766e53b1d"
+  dependencies:
+    ramda "^0.25.0"
+
+reactotron-react-native@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-2.1.0.tgz#eefafb8d146e96f037c33ef5d57e5a4ada3124f7"
+  dependencies:
+    mitt "^1.1.2"
+    prop-types "^15.5.10"
+    reactotron-core-client "^2.1.0"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"

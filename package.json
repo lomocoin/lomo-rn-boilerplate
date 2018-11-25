@@ -106,6 +106,8 @@
     "prettier": "1.15.2",
     "react-native-version": "2.6.6",
     "react-test-renderer": "16.6.1",
+    "reactotron-mst": "2.1.0",
+    "reactotron-react-native": "2.1.0",
     "standard-version": "4.4.0",
     "ts-jest": "23.10.5",
     "tslint": "5.11.0",

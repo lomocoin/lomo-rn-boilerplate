@@ -40,10 +40,10 @@ export const Store = types
 
 if (__DEV__) {
   setLivelynessChecking('error');
-  // // tslint:disable-next-line
-  // const Reactotron = require('reactotron-react-native').default;
-  // // @ts-ignore
-  // Reactotron.trackMstNode(Store);
+  // tslint:disable-next-line
+  const Reactotron = require('reactotron-react-native').default;
+  // @ts-ignore
+  Reactotron.trackMstNode(Store);
 }
 
 export type IStore = Instance<typeof Store>;
