@@ -609,6 +609,10 @@
     resolve-from "^4.0.0"
     resolve-global "^0.1.0"
 
+"@commitlint/config-conventional@^7.1.2":
+  version "7.1.2"
+  resolved "https://registry.yarnpkg.com/@commitlint/config-conventional/-/config-conventional-7.1.2.tgz#5b5e45924c9abd8f9a8d83eb1f66e24e5f66916f"
+
 "@commitlint/ensure@^7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@commitlint/ensure/-/ensure-7.2.0.tgz#03cfab7135f57f62b73698f441a516886a84a1f6"
@@ -6515,13 +6519,13 @@ reactotron-core-client@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/reactotron-core-client/-/reactotron-core-client-2.1.0.tgz#d36f806eaf14a9f8c4595a9866f8cbfaafc1ee8c"
 
-reactotron-mst@^2.1.0:
+reactotron-mst@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/reactotron-mst/-/reactotron-mst-2.1.0.tgz#bf97a3a40c96fa9e3c63e8470b81340766e53b1d"
   dependencies:
     ramda "^0.25.0"
 
-reactotron-react-native@^2.1.0:
+reactotron-react-native@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/reactotron-react-native/-/reactotron-react-native-2.1.0.tgz#eefafb8d146e96f037c33ef5d57e5a4ada3124f7"
   dependencies:
