@@ -14,22 +14,22 @@ let User = class User {
 };
 __decorate([
     parrot_1.Column({
-        type: "string",
-        limit: [6, 20]
+        type: 'string',
+        limit: [6, 20],
     }),
     __metadata("design:type", String)
 ], User.prototype, "username", void 0);
 __decorate([
     parrot_1.Column({
-        type: "string",
-        limit: [6, 20]
+        type: 'string',
+        limit: [6, 20],
     }),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
     parrot_1.Column({
-        type: "string",
-        limit: [6, 100]
+        type: 'string',
+        limit: [6, 100],
     }),
     __metadata("design:type", String)
 ], User.prototype, "avatar", void 0);

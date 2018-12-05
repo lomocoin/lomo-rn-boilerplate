@@ -1,4 +1,4 @@
-import { Entity, Column } from 'parrot';
+import { Column, Entity } from 'parrot';
 
 @Entity(10)
 export default class Todo {

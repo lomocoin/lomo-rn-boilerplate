@@ -1,8 +1,7 @@
-import styles from './styles';
-// Base Theme
-import base, { VType, IMAGESType } from './base';
-// Custom Themes
+import base, { IMAGESType, VType } from './base';
 import purple from './purple';
+import styles from './styles';
+export { default as Icon, IconNames } from './Icons';
 
 export interface IThemeConfig {
   V: VType;

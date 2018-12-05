@@ -1,23 +1,24 @@
 import React, { PureComponent } from 'react';
-import { Text, View } from 'react-native';
-import { S, IMAGES } from '../../themes';
-import Image from '../Common/Image';
+import { ActivityIndicator, Text, View } from 'react-native';
+import { S, V } from '../../themes';
 
-interface Props {
+interface IProps {
   message?: string;
+  spinnerColor?: string;
 }
 
-export default class LoadingSpinner extends PureComponent<Props> {
+export default class LoadingSpinner extends PureComponent<IProps> {
+  static defaultColor = {
+    spinnerColor: V.defaultColor,
+  };
   render() {
-    const { message } = this.props;
+    const { message, spinnerColor } = this.props;
 
     return (
       <View style={[S.flex, S.flexAlignCenter, S.flexJustifyCenter]}>
-        <Image source={IMAGES.icon_loading} size={100} />
+        <ActivityIndicator color={spinnerColor} size="large" />
         {!!message && (
-          <Text style={[S.textDefault, S.colorWhite, S.marginTop]}>
-            {message}
-          </Text>
+          <Text style={[S.textDefault, S.marginTop]}>{message}</Text>
         )}
       </View>
     );

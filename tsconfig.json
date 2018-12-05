@@ -5,18 +5,27 @@
     "allowSyntheticDefaultImports": true,
     "strictPropertyInitialization": true,
     "strictNullChecks": true,
+    "strictFunctionTypes": true,
     "importHelpers": true,
+    "alwaysStrict": true,
     "target": "es2015",
-    "jsx": "react",
+    "jsx": "react-native",
     "strict": true,
     "noEmit": true,
-    "noImplicitAny": true,
+    "noImplicitAny": false,
+    "noImplicitThis": true,
     "noUnusedLocals": true,
+    "esModuleInterop": true,
     "noUnusedParameters": true,
     "moduleResolution": "node",
-    "lib": ["dom", "es2016"]
+    "lib": ["dom", "es2017"],
+    "typeRoots": [
+      "node_modules/@types",
+      "typings"
+    ]
   },
   "exclude": [
-    "node_modules"
+    "node_modules",
+    "e2e",
   ]
 }

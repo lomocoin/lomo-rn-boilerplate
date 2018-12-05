@@ -1,10 +1,25 @@
 import { axios } from '../utils/axios';
-import { LoginParams, RegisterParams, AuthModel } from '../models/Auth';
+
+export interface ILoginParams {
+  username: string;
+  password: string;
+}
+
+export interface IRegisterParams {
+  username: string;
+  password: string;
+}
+
+export interface ITokenResponse {
+  token: string;
+}
 
 export default {
   isLogin: () => axios.get<any, {}>('/checkToken'),
-  register: (params: RegisterParams) =>
-    axios.post<AuthModel, AuthModel>('/register', params),
-  login: (params: LoginParams) => axios.post<AuthModel, AuthModel>('/signIn', params),
-  logout: (params: LoginParams) => axios.post<AuthModel, AuthModel>('/signOut', params),
+  register: (params: IRegisterParams) =>
+    axios.post<ITokenResponse, ITokenResponse>('/register', params),
+  login: (params: ILoginParams) =>
+    axios.post<ITokenResponse, ITokenResponse>('/signIn', params),
+  logout: (params: ILoginParams) =>
+    axios.post<ITokenResponse, ITokenResponse>('/signOut', params),
 };

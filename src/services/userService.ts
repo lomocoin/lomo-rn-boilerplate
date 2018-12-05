@@ -1,6 +1,6 @@
+import { IUserModel } from '../stores/User/UserModel';
 import { axios } from '../utils/axios';
-import { UserModel } from '../models/User';
 
 export default {
-  getUsers: () => axios.get<UserModel[], UserModel[]>('/users'),
+  getUsers: () => axios.get<IUserModel[], IUserModel[]>('/users'),
 };

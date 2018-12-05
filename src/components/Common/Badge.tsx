@@ -1,12 +1,12 @@
 import React, { PureComponent } from 'react';
-import { StyleSheet, Text, View, StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, StyleSheet, Text, View, ViewStyle } from 'react-native';
 import { V } from '../../themes';
 
 const styles = StyleSheet.create({
   container: {
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: V.warnColor,
+    backgroundColor: V.warningColor,
   },
   badgeText: {
     textAlign: 'center',
@@ -15,14 +15,14 @@ const styles = StyleSheet.create({
   },
 });
 
-interface Props {
+interface IProps {
   size?: number;
   showDot?: boolean;
   value: number;
   style?: StyleProp<ViewStyle>;
 }
 
-export default class Badge extends PureComponent<Props> {
+export default class Badge extends PureComponent<IProps> {
   static displayName = 'Badge';
   static defaultProps = {
     size: 20,

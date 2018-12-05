@@ -1,34 +1,54 @@
 # Uncomment the next line to define a global platform for your project
-# platform :ios, '9.0'
+platform :ios, '9.0'
 
 target 'LomoRN' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   # use_frameworks!
 
+  # Pods for React Native
+  pod 'yoga', :path => '../node_modules/react-native/ReactCommon/yoga'
+  pod 'DoubleConversion', :podspec => '../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec'
+  pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
+  pod 'React', :path => '../node_modules/react-native', :subspecs => [
+    'Core',
+    'CxxBridge',
+    'RCTActionSheet',
+    'RCTText',
+    'RCTNetwork',
+    'RCTWebSocket',
+    'RCTAnimation',
+    'RCTImage',
+    'RCTLinkingIOS',
+    'RCTPushNotification',
+    'DevSupport',
+  ]
+
   # Pods for LomoRN
-  pod 'AppCenter/Crashes', '~> 1.8.0'
-  pod 'AppCenter/Analytics', '~> 1.8.0'
-  pod 'AppCenterReactNativeShared', '~> 1.7.1'
 
-  
+  pod 'AppCenter/Crashes', '~> 1.11.0'
+  pod 'AppCenter/Analytics', '~> 1.11.0'
+  pod 'AppCenterReactNativeShared', '~> 1.10.0'
+  pod 'appcenter', :path => '../node_modules/appcenter/ios/appcenter.podspec'
+  pod 'appcenter-crashes', :path => '../node_modules/appcenter-crashes/ios/appcenter-crashes.podspec'
+  pod 'appcenter-analytics', :path => '../node_modules/appcenter-analytics/ios/appcenter-analytics.podspec'
 
-  platform :ios, '9.0'
-  target 'LomoRNTests' do
-    inherit! :search_paths
-    # Pods for testing
+  pod 'CodePush', :path => '../node_modules/react-native-code-push'
+
+  pod 'RNDeviceInfo', :path => '../node_modules/react-native-device-info'
+
+  pod 'RNLanguages', :path => '../node_modules/react-native-languages'
+
+  pod 'react-native-splash-screen', :path => '../node_modules/react-native-splash-screen'
+
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
+  pod 'RNToastNative', :path => '../node_modules/react-native-toast-native'
+
+  post_install do |installer|
+      target = installer.pods_project.targets.select{|t| 'React' == t.name}.first
+      phase = target.new_shell_script_build_phase('Run Script')
+      phase.shell_script = "if nc -w 5 -z localhost 8081 ; then\n  if ! curl -s \"http://localhost:8081/status\" | grep -q \"packager-status:running\" ; then\n    echo \"Port 8081 already in use, packager is either not running or not running correctly\"\n    exit 2\n  fi\nelse\n  open \"$SRCROOT/../../node_modules/react-native/scripts/launchPackager.command\" || echo \"Can't start packager automatically\"\nfi"
   end
-
 end
 
-target 'LomoRN-tvOS' do
-  # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
-  # use_frameworks!
 
-  # Pods for LomoRN-tvOS
-
-  target 'LomoRN-tvOSTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-end

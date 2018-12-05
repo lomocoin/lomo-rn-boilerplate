@@ -1,9 +1,7 @@
 import { createStackNavigator } from 'react-navigation';
-import { paramsToProps } from './utils';
-
-// Auth
 import Login from '../containers/Auth/Login';
 import Register from '../containers/Auth/Register';
+import { paramsToProps } from './utils';
 
 export default createStackNavigator(
   {

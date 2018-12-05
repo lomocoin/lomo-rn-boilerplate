@@ -2,10 +2,10 @@
 
 ## App Config
 
-* In the dashboard of Code Push, iOS and Android app are separated app
-* Each app has two distinct deployment keys to identify its state: `Staging` and `Production`
-* Config for this key is set by Info.plist for iOS and MainApplication.java for Android
-* We should use `Staging key` for test and use `Production key` for public release
+- In the dashboard of Code Push, iOS and Android app are separated app
+- Each app has two distinct deployment keys to identify its state: `Staging` and `Production`
+- Config for this key is set by Info.plist for iOS and MainApplication.java for Android
+- We should use `Staging key` for test and use `Production key` for public release
 
 ## Explain the patch process
 
@@ -23,7 +23,7 @@ Currently, the patch will be downloaded when the app starts and be applied immed
   }
 ```
 
-This is not the default behaviour but I think it might be the best choice. The default is `apply the patch when next time app start`. We can do other custom configs as well.
+This is not the default behavior but I think it might be the best choice. The default is `apply the patch when next time app start`. We can do other custom configs as well.
 
 More docs can be found at [this page](https://docs.microsoft.com/en-us/appcenter/distribution/codepush/react-native#how-does-it-work).
 
@@ -46,14 +46,14 @@ While we can do some config in the dashboard and choose to utilize more complex 
 
 ### Android Deployment Key
 
-* To fetch deployment key, exec `appcenter codepush deployment list -a LoMoCoinTeam/Lomo-RN-Boilerplate-Android`
+- To fetch deployment key, exec `appcenter codepush deployment list -a LoMoCoinTeam/Lomo-RN-Boilerplate-Android`
 
-* Staging    │ HkEsIv6DKddaxQcRBem3qAVxtTwNSJ43ueVLQ │
-* Production │ z2XkRWNZSlIPqvkiX2G1tZxLNYDABk42Ol4Um │
+- Staging │ HkEsIv6DKddaxQcRBem3qAVxtTwNSJ43ueVLQ │
+- Production │ z2XkRWNZSlIPqvkiX2G1tZxLNYDABk42Ol4Um │
 
 ### iOS Deployment Key
 
-* To fetch deployment key, exec `appcenter codepush deployment list -a LoMoCoinTeam/Lomo-RN-Boilerplate-iOS`
+- To fetch deployment key, exec `appcenter codepush deployment list -a LoMoCoinTeam/Lomo-RN-Boilerplate-iOS`
 
-* Staging    │ LiQyho3bQ-TDd7tKy4pKri_N5UkqSJXlnxE87 │
-* Production │ 3HrlRpTw-pOU5POl3h8Ufqhz9wyur1Ql3xEUX │
+- Staging │ LiQyho3bQ-TDd7tKy4pKri_N5UkqSJXlnxE87 │
+- Production │ 3HrlRpTw-pOU5POl3h8Ufqhz9wyur1Ql3xEUX │

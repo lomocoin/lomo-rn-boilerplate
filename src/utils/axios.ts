@@ -1,47 +1,61 @@
-import axios, { AxiosInstance, AxiosResponse } from 'axios';
+import axiosUtil, { AxiosInstance, AxiosResponse } from 'axios';
 import { Platform } from 'react-native';
 import DeviceInfo from 'react-native-device-info';
-import config from '../config';
+import Config from '../config';
 import i18n from '../i18n';
-import { auth } from '../stores';
-import showToast from '../utils/Toast';
 
-const API_VERSIONS = ['v0', 'v1', 'v2'];
+const authInfo = {
+  token: '',
+  onLogout: () => undefined,
+};
+const API_VERSIONS = [['v1', ''], ['v2', 'v2'], ['v3', 'v3'], ['custom', '']];
 const axiosInstances: { [key: string]: AxiosInstance } = {};
 
-export interface ApiError {
-  message: string;
-  status: number;
-  code: number;
+export function setAuthInfo(token: string, onLogout: () => any) {
+  authInfo.token = token;
+  authInfo.onLogout = onLogout;
 }
 
-function getErrorObject(response: AxiosResponse): ApiError {
+export function getAuthInfo() {
+  return authInfo;
+}
+
+export interface IApiError {
+  code: number;
+  message: string;
+  status: number;
+  url?: string;
+}
+
+function getErrorObject(response: AxiosResponse): IApiError {
   // No response data, probably no network or 500
-  let errorCode = -1;
-  let errorMessage = i18n.t('error_network');
+  const status = response ? response.status : -1;
+  let code = -1;
+  let message = response ? i18n.t('error_network') : i18n.t('error_unknown');
   if (response && response.data) {
-    errorCode = response.data.result ? response.data.result.code || -1 : -1;
-    errorMessage =
-      response.data.message || response.data.error || i18n.t('error_unknown');
+    code = response.data.result ? response.data.result.code || -1 : -1;
+    message =
+      response.data.message ||
+      response.data.error ||
+      i18n.t(status === 0 ? 'error_network' : 'error_unknown');
   }
 
   return {
-    code: errorCode,
-    message: errorMessage,
-    status: response ? response.status : -1,
+    code,
+    message,
+    status,
+    url: (response && response.config && response.config.url) || '',
   };
 }
 
-function reactOnStatusCode(error: ApiError) {
-  if (error) {
+function reactOnStatusCode(error: IApiError) {
+  if (authInfo.token && error) {
     switch (error.status) {
       case 401:
-        auth.logout();
-        break;
-      case 403:
-        auth.logout();
+        authInfo.onLogout();
         break;
       default:
+        showErrorMessage(error);
     }
   }
 }
@@ -49,48 +63,37 @@ function reactOnStatusCode(error: ApiError) {
 /**
  * Show a toast with the API error message only if user already logged in
  * (to avoid show error message due to invalid token)
- * @param error Error object informations
+ * @param error Error object information
  */
-function showErrorMessage(error: ApiError) {
-  if (auth.isCheckLoginCompleted && error) {
-    switch (error.status) {
-      case 401:
-        showToast(i18n.t('auth_token_invalid'));
-        break;
-      case 403:
-        showToast(i18n.t('auth_token_blocked'));
-        break;
-      default:
-        showToast(error.message);
-    }
-  }
+function showErrorMessage(_: IApiError) {
+  // Add your conditions in here
 }
 
 function getResult(response: AxiosResponse) {
   if (response && response.data) {
     return response.data;
   }
-  throw Error('Response without Data');
+  throw new Error('API response without result field');
 }
 
-API_VERSIONS.forEach(version => {
-  axiosInstances[version] = axios.create({
-    baseURL: `${config.BASE_URL}${version !== 'v0' ? `/${version}` : ''}`,
+API_VERSIONS.forEach(([version, suffix]) => {
+  axiosInstances[version] = axiosUtil.create({
+    baseURL: `${Config.API_URL}/${suffix}`,
     headers: {
       accept: 'application/json',
       'content-type': 'application/json',
-      'device-os': Platform.OS,
-      'device-app-version': DeviceInfo.getVersion(),
-      'device-build-version': DeviceInfo.getBuildNumber(),
+      'app-os': Platform.OS,
+      'app-version': DeviceInfo.getVersion(),
+      'app-build': DeviceInfo.getBuildNumber(),
     },
-    timeout: 8000,
+    timeout: 20000,
   });
   axiosInstances[version].interceptors.request.use(
     requestConfig => {
       requestConfig.headers = {
         ...requestConfig.headers,
-        authorization: auth.token || '',
-        'device-app-language': i18n.t('language'),
+        Authorization: getAuthInfo().token,
+        'app-language': i18n.t('language'),
       };
       return requestConfig;
     },
@@ -102,13 +105,18 @@ API_VERSIONS.forEach(version => {
     },
     error => {
       const errorObj = getErrorObject(error.response);
-      showErrorMessage(errorObj);
       reactOnStatusCode(errorObj);
+      // NOTE: is better to handle every single catch in the app and show the toast accordingly
+      // instead of having an automatic show toast for each request
+      // showErrorMessage(errorObj);
       return Promise.reject(errorObj);
     },
   );
 });
 
-const { v0, v1, v2 } = axiosInstances;
-
-export { axiosInstances, v0 as axios, v1 as axiosv1, v2 as axiosv2 };
+export const {
+  custom: axiosCustom,
+  v1: axios,
+  v2: axiosv2,
+  v3: axiosv3,
+} = axiosInstances;

@@ -1,5 +1,12 @@
 import React, { PureComponent, ReactNode } from 'react';
-import { KeyboardAvoidingView, Platform, StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import {
+  KeyboardAvoidingView,
+  Platform,
+  StyleProp,
+  StyleSheet,
+  View,
+  ViewStyle,
+} from 'react-native';
 import { S } from '../../themes';
 
 const styles = StyleSheet.create({
@@ -8,14 +15,14 @@ const styles = StyleSheet.create({
   },
 });
 
-interface Props {
+interface IProps {
   children?: ReactNode;
   style?: StyleProp<ViewStyle>;
   keyboardAvoidingView?: boolean;
   onContainerClick?: () => void;
 }
 
-export default class ViewContainer extends PureComponent<Props> {
+export default class ViewContainer extends PureComponent<IProps> {
   render() {
     const {
       style,

@@ -1,53 +1,88 @@
-import { Provider, observer } from 'mobx-react/native';
+import AppCenter from 'appcenter';
+import Analytics from 'appcenter-analytics';
+import Crashes, { ErrorAttachmentLog } from 'appcenter-crashes';
+import { observer, Provider } from 'mobx-react/native';
 import React, { Component } from 'react';
-import { Platform, SafeAreaView, YellowBox } from 'react-native';
-import codePush from 'react-native-code-push';
+import { setI18n } from 'react-i18next';
+import { Platform, YellowBox } from 'react-native';
+import CodePush from 'react-native-code-push';
 import SplashScreen from 'react-native-splash-screen';
+import { SafeAreaView } from 'react-navigation';
+import Loading from './components/Common/Loading';
 import StatusBar from './components/Common/StatusBar';
-import LoadingModal from './containers/Common/Loading';
+import i18n from './i18n';
 import AppNavigator from './navigation/AppNavigator';
-import stores from './stores';
+import { IStore, Store } from './stores';
 import { S } from './themes';
+import { setAuthInfo } from './utils/axios';
+import { codePushConfig } from './utils/CodePush';
 
-YellowBox.ignoreWarnings(['RNToastNative']);
+YellowBox.ignoreWarnings([]);
 
-const codePushOptions = {
-  checkFrequency: codePush.CheckFrequency.ON_APP_RESUME,
-};
+interface IState {
+  store: IStore | null;
+}
 
+@CodePush(codePushConfig())
 @observer
-class App extends Component {
-  componentDidMount() {
-    if (__DEV__) {
-      codePush.disallowRestart();
-    }
+export default class App extends Component<{}, IState> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      store: null,
+    };
+  }
 
-    codePush.sync({
-      installMode: codePush.InstallMode.IMMEDIATE,
+  async componentDidMount() {
+    AppCenter.setLogLevel(
+      // @ts-ignore (https://github.com/Microsoft/AppCenter-SDK-React-Native/issues/472)
+      __DEV__ ? AppCenter.LogLevelDebug : AppCenter.LogLevelNone,
+    );
+    Crashes.setEnabled(!__DEV__);
+    Analytics.setEnabled(!__DEV__);
+
+    const store: any = await Store.hydrate();
+
+    Crashes.setListener({
+      shouldProcess: () => true, // return false if the crash report need to be ignored
+      getErrorAttachments() {
+        const textAttachment = ErrorAttachmentLog.attachmentWithText(
+          'UserId',
+          `${store.user.id || 'before_login'}`,
+        );
+        return Promise.resolve([textAttachment]);
+      },
     });
+
+    setI18n(i18n);
+    setAuthInfo(store.auth.token, store.auth.logout);
+    i18n.changeLanguage(store.ui.language);
 
     if (Platform.OS === 'android') {
       SplashScreen.hide();
     }
+
+    this.setState({
+      store,
+    });
   }
 
   render() {
-    const { common } = stores;
+    const { store } = this.state;
 
     return (
-      <Provider {...stores}>
-        <SafeAreaView style={S.flex}>
-          <StatusBar />
-          <AppNavigator />
-          <LoadingModal
-            isShow={common.isLoadingVisible}
-            isBlocking={common.isLoadingBlocking}
-            message={common.loadingMessage}
-          />
-        </SafeAreaView>
-      </Provider>
+      store && (
+        <Provider store={store}>
+          <SafeAreaView
+            forceInset={{ bottom: 'never' }}
+            style={[S.flex, S.bgDefault]}
+          >
+            <StatusBar />
+            <AppNavigator />
+            <Loading isShow={store.ui.isLoading} />
+          </SafeAreaView>
+        </Provider>
+      )
     );
   }
 }
-
-export default codePush(codePushOptions)(App);

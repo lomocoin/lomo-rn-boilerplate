@@ -2,6 +2,7 @@ export default {
   // App color
   appContainerColor: '#ffee6c',
   appStatusBarColor: '#feef6b',
+  appStatusBarStyle: 'dark-content',
 
   // Components
   inputBgColor: '#f7f7f7', // TextInput background color
@@ -15,7 +16,8 @@ export default {
   secondaryBgColor: '#f7f7f7',
   primaryColor: '#feed75',
   successColor: '#26b317',
-  warnColor: '#ff3f3f', // Warning/Notification color
-  whiteColor: '#ffffff',  // Always white color
+  warningColor: '#ff3f3f', // Warning/Notification color
+  whiteColor: '#ffffff', // Always white color
   borderColor: '#f5f5f5',
+  backdropBgColor: 'rgba(0, 0, 0, 0.5)',
 };

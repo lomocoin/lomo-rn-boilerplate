@@ -1,11 +1,14 @@
+import { observer } from 'mobx-react/native';
 import React, { Component } from 'react';
 import { BackHandler, Platform } from 'react-native';
-import { observer, inject } from 'mobx-react/native';
-import { setNavigator, getCurrentRouteName } from './index';
+import { NavigationContainerComponent } from 'react-navigation';
+import i18nNext from '../i18n';
+import { injectStores } from '../stores';
 import showToast from '../utils/Toast';
 import AuthStack from './AuthStack';
+import { getCurrentRouteName, setNavigator } from './index';
 
-@inject('common')
+@injectStores('ui')
 @observer
 export default class AuthStackNav extends Component<any> {
   static router = AuthStack.router;
@@ -25,10 +28,10 @@ export default class AuthStackNav extends Component<any> {
   }
 
   onBackAndroid = () => {
-    const { common } = this.props;
+    const { ui } = this.props;
     const currentScreen = getCurrentRouteName();
 
-    if (common.isLoadingVisible || this.isTransitioning) {
+    if (ui.isLoading || this.isTransitioning) {
       // wait loading finished
       return true;
     }
@@ -45,12 +48,12 @@ export default class AuthStackNav extends Component<any> {
     }
 
     this.lastBackPressed = Date.now();
-    showToast(common.lg.t('app_confirm_exit'));
+    showToast(i18nNext.t('app_confirm_exit'));
 
     return true;
   };
 
-  setNavigationRef = (nav: any) => {
+  setNavigationRef = (nav: NavigationContainerComponent) => {
     setNavigator(nav);
   };
 
